@@ -3,79 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Déménagement Express</title>
+  <title>O&F Transport - Déménagement</title>
+  
+  <!-- SDK EmailJS mis à jour avec chargement correct -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/latest/email.min.js"></script>
+  <script type="text/javascript">
+    // Attendre que la page soit complètement chargée
+    window.onload = function() {
+      emailjs.init("P7oSU6F_wRVN7h7Br", {publicKey: true});
+    }
+  </script>
+  
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #0077cc;
+    /* CSS styles */
+    body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; padding-top: 50px; }
+    nav { background-color: rgba(0, 0, 0, 0.7); position: fixed; top: 0; width: 100%; display: flex; justify-content: center; padding: 10px 0; z-index: 2; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; font-size: 16px; transition: color 0.3s; }
+    nav a:hover { color: #25d366; }
+    header { position: relative; width: 100%; height: 400px; }
+    header img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .header-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); z-index: 1; }
+    .header-text h1 { margin: 0; font-size: 40px; }
+    .header-text p { margin: 5px 0 0; font-size: 20px; }
+    section { padding: 20px; max-width: 800px; margin: 20px auto; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { color: #0077cc; }
+    .contact-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+    .contact-buttons a { display: flex; align-items: center; gap: 8px; background-color: #0077cc; color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; }
+    .contact-buttons img { width: 24px; height: 24px; }
+    form input, form textarea { width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; }
+    form button { background-color: #0077cc; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+    form button:hover { background-color: #005fa3; }
+    iframe { width: 100%; height: 300px; border: 0; margin-top: 10px; border-radius: 8px; }
+    footer { background-color: #0077cc; color: white; text-align: center; padding: 15px; margin-top: 30px; }
+    footer p { font-style: italic; font-weight: bold; color: black; margin: 0; }
+    footer a { color: white; text-decoration: none; }
+    
+    /* Style pour le message de confirmation */
+    .message-confirmation {
+      display: none;
+      background-color: #4CAF50;
       color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    section {
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #0077cc;
-    }
-    .contact-buttons {
+      padding: 15px;
       margin-top: 15px;
-    }
-    .contact-buttons a {
-      display: inline-block;
-      margin-right: 10px;
-      padding: 10px 15px;
-      background-color: #25d366;
-      color: white;
-      text-decoration: none;
       border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
     }
-    .phone {
-      background-color: #0077cc;
-    }
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    form button {
-      background-color: #0077cc;
+    
+    /* Style pour le message d'erreur */
+    .message-erreur {
+      display: none;
+      background-color: #f44336;
       color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* Style pour le bouton de chargement */
+    .loading-button {
+      position: relative;
       cursor: pointer;
     }
-    form button:hover {
-      background-color: #005fa3;
+
+    .loading-button.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .loading-button.loading::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      right: 10px;
+      margin-top: -10px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Déménagement Express</h1>
-    <p>Votre partenaire de confiance pour un déménagement rapide et sécurisé.</p>
+    <nav>
+      <a href="#services">Nos Services</a>
+      <a href="#contact">Contactez-nous</a>
+      <a href="#devis">Demande de Devis</a>
+      <a href="#localisation">Localisation</a>
+    </nav>
+    <img src="image.jpg" alt="Déménagement Express">
+    <div class="header-text">
+      <h1>O&amp;F Transport</h1>
+      <p>Déménagement rapide et sécurisé</p>
+    </div>
   </header>
 
-  <section>
+  <section id="services">
     <h2>Nos Services</h2>
     <p>
-      Nous offrons des services de déménagement pour particuliers et entreprises :
+      O&F Transport vous propose des services de déménagement pour particuliers et entreprises :
     </p>
     <ul>
       <li>Déménagement local et national</li>
@@ -85,39 +121,148 @@
     </ul>
   </section>
 
-  <section>
+  <section id="contact">
     <h2>Contactez-nous</h2>
-    <p>Par téléphone ou WhatsApp :</p>
     <div class="contact-buttons">
-      <a href="https://wa.me/212634231789" target="_blank">WhatsApp</a>
-      <a class="phone" href="tel:0634231789">Appeler : 0634231789</a>
+      <a href="https://wa.me/+33628114145" target="_blank">
+        <img src="whatsapp.png" alt="WhatsApp"> WhatsApp
+      </a>
+      <a href="tel:+33628114145" style="display: block; cursor: pointer;">
+        <img src="phone.png" alt="Téléphone"> Afficher le numéro
+      </a>
+      <a href="mailto:bilalmoussaoui99@hotmail.com?subject=Demande de renseignement&body=Bonjour, je souhaiterais obtenir plus d'informations sur vos services;">
+        <img src="mail.png" alt="Email"> bilalmoussaoui99@hotmail.com
+      </a>
+      <a href="https://www.facebook.com/tonpage" target="_blank">
+        <img src="facebook.png" alt="Facebook"> Facebook
+      </a>
     </div>
   </section>
 
-  <section>
+  <section id="devis">
     <h2>Demande de Devis</h2>
-    <form action="mailto:tonemail@example.com" method="POST" enctype="text/plain">
+    <form id="formDevis">
       <label for="nom">Nom :</label>
-      <input type="text" id="nom" name="Nom" required>
+      <input type="text" id="nom" name="nom" required>
 
-      <label for="tel">Téléphone :</label>
-      <input type="text" id="tel" name="Téléphone" required>
+      <label for="telephone">Téléphone :</label>
+      <input type="text" id="telephone" name="telephone" required>
 
       <label for="adresse_depart">Adresse de départ :</label>
-      <input type="text" id="adresse_depart" name="Adresse de départ" required>
+      <input type="text" id="adresse_depart" name="adresse_depart" required>
 
-      <label for="adresse_arrivee">Adresse d’arrivée :</label>
-      <input type="text" id="adresse_arrivee" name="Adresse d’arrivée" required>
+      <label for="adresse_arrivee">Adresse d'arrivée :</label>
+      <input type="text" id="adresse_arrivee" name="adresse_arrivee" required>
 
       <label for="date">Date du déménagement :</label>
-      <input type="date" id="date" name="Date du déménagement" required>
+      <input type="date" id="date" name="date" required>
 
       <label for="message">Message :</label>
-      <textarea id="message" name="Message" rows="4"></textarea>
+      <textarea id="message" name="message" rows="4"></textarea>
 
-      <button type="submit">Envoyer le devis</button>
+      <button type="submit" id="submitButton" class="loading-button">Envoyer le devis</button>
+      
+      <!-- Message de confirmation -->
+      <div id="messageConfirmation" class="message-confirmation">
+        Votre demande de devis a été envoyée avec succès ! Nous vous contacterons dans les plus brefs délais.
+      </div>
+      
+      <!-- Message d'erreur -->
+      <div id="messageErreur" class="message-erreur">
+        Une erreur est survenue lors de l'envoi. Veuillez réessayer ou nous contacter directement.
+      </div>
     </form>
   </section>
+
+  <section id="localisation">
+    <h2>Localisation</h2>
+    <p>Nous sommes situés à :</p>
+    <p><strong>15 Pass. du Cid, 77186 Noisiel, France</strong></p>
+
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.3510428247636!2d2.631056876942899!3d48.84369987133471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e60f0010f823e1%3A0xd3b2e63b374c0600!2sO%26F%20transport!5e1!3m2!1sfr!2sfr!4v1714061005631!5m2!1sfr!2sfr"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+
+    <p style="text-align:center; margin-top:10px;">
+      <a href="https://www.google.com/maps/place/O%26F+transport/@48.8436999,2.6323491,154m/data=!3m3!1e3!4b1!5s0x47e60ff8e0ceef6f:0x6b78ef9f0d3b17bf!4m6!3m5!1s0x47e60f0010f823e1:0xd3b2e63b374c0600!8m2!3d48.8436999!4d2.6335668!16s%2Fg%2F11vzxwv0kl?entry=ttu"
+         target="_blank" 
+         style="color:#0077cc; text-decoration:none; font-weight:bold;">
+        Voir sur Google Maps
+      </a>
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 O&F Transport - Tous droits réservés</p>
+  </footer>
+
+  <script>
+    // Attendre que le DOM soit chargé
+    document.addEventListener("DOMContentLoaded", function() {
+      var formDevis = document.getElementById("formDevis");
+      var submitButton = document.getElementById("submitButton");
+      
+      if (formDevis) {
+        formDevis.addEventListener("submit", function(event) {
+          event.preventDefault();
+          
+          // Vérifier que emailjs est défini
+          if (typeof emailjs === 'undefined') {
+            document.getElementById("messageErreur").textContent = "Erreur: Service d'email non chargé. Veuillez rafraîchir la page.";
+            document.getElementById("messageErreur").style.display = "block";
+            return;
+          }
+          
+          // Masquer les messages précédents
+          document.getElementById("messageConfirmation").style.display = "none";
+          document.getElementById("messageErreur").style.display = "none";
+          
+          // Afficher l'indicateur de chargement
+          submitButton.classList.add("loading");
+          submitButton.disabled = true;
+          
+          // Préparer les données à envoyer
+          const templateParams = {
+            nom: document.getElementById("nom").value,
+            telephone: document.getElementById("telephone").value,
+            adresse_depart: document.getElementById("adresse_depart").value,
+            adresse_arrivee: document.getElementById("adresse_arrivee").value,
+            date: document.getElementById("date").value,
+            message: document.getElementById("message").value
+          };
+          
+          // Envoyer l'email
+          emailjs.send("service_aw5n0yr", "template_99005ln", templateParams)
+            .then(function(response) {
+              console.log("SUCCESS!", response.status, response.text);
+              document.getElementById("messageConfirmation").style.display = "block";
+              document.getElementById("formDevis").reset();
+              
+              // Faire défiler jusqu'au message de confirmation
+              document.getElementById("messageConfirmation").scrollIntoView({behavior: "smooth"});
+              
+              // Réinitialiser le bouton
+              submitButton.classList.remove("loading");
+              submitButton.disabled = false;
+            }, function(error) {
+              console.log("FAILED...", error);
+              document.getElementById("messageErreur").textContent = "Erreur lors de l'envoi: " + error.text;
+              document.getElementById("messageErreur").style.display = "block";
+              
+              // Faire défiler jusqu'au message d'erreur
+              document.getElementById("messageErreur").scrollIntoView({behavior: "smooth"});
+              
+              // Réinitialiser le bouton
+              submitButton.classList.remove("loading");
+              submitButton.disabled = false;
+            });
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
