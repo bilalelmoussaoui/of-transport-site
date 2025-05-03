@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Déménagement Express</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0077cc;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    section {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #0077cc;
+    }
+    .contact-buttons {
+      margin-top: 15px;
+    }
+    .contact-buttons a {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 10px 15px;
+      background-color: #25d366;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .phone {
+      background-color: #0077cc;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    form button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Déménagement Express</h1>
+    <p>Votre partenaire de confiance pour un déménagement rapide et sécurisé.</p>
+  </header>
+
+  <section>
+    <h2>Nos Services</h2>
+    <p>
+      Nous offrons des services de déménagement pour particuliers et entreprises :
+    </p>
+    <ul>
+      <li>Déménagement local et national</li>
+      <li>Emballage et protection des meubles</li>
+      <li>Transport sécurisé</li>
+      <li>Chargement et déchargement</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Contactez-nous</h2>
+    <p>Par téléphone ou WhatsApp :</p>
+    <div class="contact-buttons">
+      <a href="https://wa.me/212634231789" target="_blank">WhatsApp</a>
+      <a class="phone" href="tel:0634231789">Appeler : 0634231789</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Demande de Devis</h2>
+    <form action="mailto:tonemail@example.com" method="POST" enctype="text/plain">
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" name="Nom" required>
+
+      <label for="tel">Téléphone :</label>
+      <input type="text" id="tel" name="Téléphone" required>
+
+      <label for="adresse_depart">Adresse de départ :</label>
+      <input type="text" id="adresse_depart" name="Adresse de départ" required>
+
+      <label for="adresse_arrivee">Adresse d’arrivée :</label>
+      <input type="text" id="adresse_arrivee" name="Adresse d’arrivée" required>
+
+      <label for="date">Date du déménagement :</label>
+      <input type="date" id="date" name="Date du déménagement" required>
+
+      <label for="message">Message :</label>
+      <textarea id="message" name="Message" rows="4"></textarea>
+
+      <button type="submit">Envoyer le devis</button>
+    </form>
+  </section>
+
+</body>
+</html>
