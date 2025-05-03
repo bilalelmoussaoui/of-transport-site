@@ -6,13 +6,19 @@
   <title>O&F Transport - Déménagement</title>
   
 <!-- SDK EmailJS -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <script>
-  window.onload = function() {
-    emailjs.init("P7oSU6F_wRVN7h7Br");
-  };
+  document.addEventListener("DOMContentLoaded", function () {
+    // Vérifier que la bibliothèque est bien chargée
+    if (typeof emailjs !== "undefined") {
+      emailjs.init("P7oSU6F_wRVN7h7Br");
+    } else {
+      console.error("EmailJS n’a pas été chargé.");
+    }
+  });
 </script>
+
 
   
   <style>
